@@ -1,24 +1,27 @@
 import logo from "./logo.svg";
 import "./App.css";
+// import "dotenv/config";
 import axios from "axios";
+import { io } from "socket.io-client";
+
+const establish = () => {
+  const socket = io("ws://localhost:7778", {
+    reconnectionDelayMax: 10000,
+    auth: {
+      token: "123",
+    },
+    withCredentials: false,
+  });
+
+  socket.io.on("error", (error) => {
+    console.log(error);
+  });
+};
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+      <div>establish {establish()}</div>
     </div>
   );
 }
