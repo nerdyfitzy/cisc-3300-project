@@ -2,11 +2,11 @@ import express from "express";
 import cors from "cors";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import { createMessage, getMessage, getMessages } from "./database.js";
+import { createMessage, getMessages } from "./database.js";
 import "dotenv/config";
 
-const { WS_PORT, HTTP_PORT } = process.env;
-console.log(WS_PORT, HTTP_PORT);
+const WS_PORT = process.env.WS_PORT || 7778;
+const HTTP_PORT = process.env.HTTP_PORT || 7777;
 
 const app = express();
 app.use(cors());
