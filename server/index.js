@@ -51,6 +51,13 @@ io.on("connection", (socket) => {
 });
 
 server.listen(process.env.WS_PORT);
+
+//send the main index.html to user for whatever route they access
+app.use(express.static(path.join(__dirname, "client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
+
 app.listen(HTTP_PORT, () => {
   console.log("http started on", HTTP_PORT);
 });
