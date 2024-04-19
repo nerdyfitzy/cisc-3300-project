@@ -1,11 +1,11 @@
 import React from "react";
 
-const Submit = (handleSubmit) => {
+const Submit = ({ handleSubmit }) => {
   return (
     <>
       <button
-        style={{ background: "#81C6DC" }}
-        className='h-10 w-20 m-2 rounded-xl font-medium text-center align-middle'
+        onClick={handleSubmit}
+        className='bg-light-turqoise hover:bg-dark-turqoise active:bg-darker-turqoise h-10 w-20 m-2 rounded-xl font-medium text-center align-middle drop-shadow-xl'
       >
         Submit
       </button>

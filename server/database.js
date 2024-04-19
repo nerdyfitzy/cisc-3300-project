@@ -21,7 +21,6 @@ export const getMessage = async (id) => {
   `,
     [id]
   );
-  console.log("Successfully got message ID: ", id, "content", res[0].content);
   return res[0];
 };
 
@@ -31,13 +30,13 @@ export const getMessages = async () => {
   return res;
 };
 
-export const createMessage = async (content) => {
+export const createMessage = async (content, user) => {
   const [res] = await pool.query(
     `
-      INSERT INTO Messages (content)
-      VALUES (?)
+      INSERT INTO Messages (content, user)
+      VALUES (?, ?)
   `,
-    [content]
+    [content, user]
   );
 
   const id = res.insertId;

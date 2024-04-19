@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-const Input = (handleInputChange) => {
-  const [input, setInput] = useState("");
+const Input = ({ handleInputChange }) => {
   return (
     <div className='flex flex-col justify-start w-fit'>
       <label
@@ -15,6 +14,7 @@ const Input = (handleInputChange) => {
         type='text'
         className='mx-2 w-56 rounded-lg h-8 text-left px-4 text-sm font-medium'
         style={{ background: "#b3a7a6" }}
+        onChange={(e) => handleInputChange(e.target.value)}
       />
     </div>
   );

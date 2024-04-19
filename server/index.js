@@ -26,9 +26,23 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("connection established with", socket.id);
 
-  socket.on("create-message", (content) => {
-    const newMessage = createMessage(content);
+  //ROUTE:
+  //GET ALL MESSAGES
+  socket.once("get-messages", async () => {
+    console.log("-----User requesting all messages-----");
+    const allMessages = await getMessages();
+    socket.emit("receive-all", allMessages);
+
+    console.log("-----Request Completed-----");
+  });
+
+  //ROUTE:
+  //CREATE NEW MESSAGE
+  socket.on("create-message", async (content, user) => {
+    const newMessage = await createMessage(content, user);
     io.emit("receive-message", newMessage);
+
+    console.log("-----Request Completed-----");
   });
 
   socket.on("disconnect", () => {
@@ -39,9 +53,4 @@ io.on("connection", (socket) => {
 server.listen(process.env.WS_PORT);
 app.listen(HTTP_PORT, () => {
   console.log("http started on", HTTP_PORT);
-});
-
-app.get("/", (req, res) => {});
-app.get("/test", (req, res) => {
-  res.send("gotten");
 });
