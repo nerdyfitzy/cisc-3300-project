@@ -3,7 +3,7 @@ import InputFields from "./inputFields";
 import MessageContainer from "./messageContainer";
 import { io } from "socket.io-client";
 
-const socket = io();
+const socket = io("https://anonymous-messager-da0bfe0ead36.herokuapp.com/");
 socket.io.on("error", (error) => {
   console.log(error);
 });
