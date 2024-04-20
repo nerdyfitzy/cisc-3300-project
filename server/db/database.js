@@ -1,16 +1,7 @@
 import mysql from "mysql2";
-import "dotenv/config";
+import { production } from "./options.js";
 
-const { HOST, NAME, USER, PASS } = process.env;
-
-const pool = mysql
-  .createPool({
-    host: HOST,
-    user: USER,
-    password: PASS,
-    database: NAME,
-  })
-  .promise();
+const pool = mysql.createConnection(production.connection).promise();
 
 export const getMessage = async (id) => {
   const [res] = await pool.query(

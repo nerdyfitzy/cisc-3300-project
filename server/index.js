@@ -4,13 +4,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import { createMessage, getMessages } from "./database.js";
-import "dotenv/config";
+import { createMessage, getMessages } from "./db/database.js";
+import { PORT } from "./env.js";
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
-
-const PORT = process.env.PORT || 7777;
 
 const app = express();
 app.use(cors());
