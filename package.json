@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node ./server/index.js",
-    "dev": "npx nodemon server/index.js && cd client && npm run start",
+    "dev": "concurrently --kill-others \"cd client && npm run start\" \"npx nodemon server/index.js\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "author": "",
@@ -19,6 +19,7 @@
     "socket.io": "^4.7.5"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "nodemon": "^3.1.0"
   },
   "engines": {

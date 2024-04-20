@@ -1,7 +1,11 @@
 import mysql from "mysql2/promise";
-import { production } from "./options.js";
+import { production, development } from "./options.js";
+import { environment } from "../env.js";
 
-const pool = await mysql.createConnection(process.env.CLEARDB_DATABASE_URL);
+const options = environment == "production" ? production : development;
+
+console.log("Using DB Auth -", options);
+const pool = await mysql.createConnection(options);
 
 export const getMessage = async (id) => {
   const [res] = await pool.query(

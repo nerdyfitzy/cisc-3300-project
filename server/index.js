@@ -5,10 +5,7 @@ import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import { createMessage, getMessages } from "./db/database.js";
-import { PORT } from "./env.js";
-
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
+import { PORT, environment } from "./env.js";
 
 const app = express();
 app.use(cors());
@@ -20,16 +17,14 @@ const io = new Server(server, {
   },
 });
 
-// app.use((err, req, res, next) => {
-//   console.error(err.stack);
-//   res.status(500).send("Internal Server Error");
-// });
-
-//send the main index.html to user for whatever route they access
-app.use(express.static(path.resolve(__dirname, "../client/build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
-});
+if (environment == "production") {
+  const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+  const __dirname = path.dirname(__filename); // get the name of the directory
+  app.use(express.static(path.resolve(__dirname, "../client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
+  });
+}
 
 io.on("connection", (socket) => {
   console.log("connection established with", socket.id);
