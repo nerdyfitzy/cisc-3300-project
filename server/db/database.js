@@ -1,7 +1,7 @@
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 import { production } from "./options.js";
 
-const pool = mysql.createConnection(production.connection).promise();
+const pool = await mysql.createConnection(production.connection);
 
 export const getMessage = async (id) => {
   const [res] = await pool.query(
