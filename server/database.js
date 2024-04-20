@@ -1,11 +1,11 @@
 import mysql from "mysql2";
 import "dotenv/config";
 
-const { LOCALHOST, NAME, USER, PASS } = process.env;
+const { HOST, NAME, USER, PASS } = process.env;
 
 const pool = mysql
   .createPool({
-    host: LOCALHOST,
+    host: HOST,
     user: USER,
     password: PASS,
     database: NAME,
