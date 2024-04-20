@@ -22,7 +22,7 @@ app.use((err, req, res, next) => {
 //send the main index.html to user for whatever route they access
 app.use(express.static(path.resolve(__dirname, "../client/build")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "../client/build/index.html"));
+  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
 });
 
 app.listen(PORT, () => {
