@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import { createServer } from "http";
 import { createMessage, getMessages } from "./database.js";
@@ -50,12 +52,12 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(process.env.WS_PORT);
+server.listen(WS_PORT);
 
 //send the main index.html to user for whatever route they access
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.static("../client/build"));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  res.sendFile("..//client/build/index.html");
 });
 
 app.listen(HTTP_PORT, () => {
