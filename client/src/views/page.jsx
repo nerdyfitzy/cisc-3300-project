@@ -3,7 +3,7 @@ import InputFields from "./inputFields";
 import MessageContainer from "./messageContainer";
 import { io } from "socket.io-client";
 
-const socket = io("/");
+const socket = io("http://localhost:7777/");
 socket.io.on("error", (error) => {
   console.log(error);
 });
