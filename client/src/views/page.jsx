@@ -3,9 +3,7 @@ import InputFields from "./inputFields";
 import MessageContainer from "./messageContainer";
 import { io } from "socket.io-client";
 
-const socket = io("/", {
-  reconnectionDelayMax: 10000,
-});
+const socket = io();
 socket.io.on("error", (error) => {
   console.log(error);
 });
