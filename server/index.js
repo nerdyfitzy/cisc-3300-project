@@ -7,6 +7,9 @@ import { createServer } from "http";
 import { createMessage, getMessages } from "./database.js";
 import "dotenv/config";
 
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
+
 const WS_PORT = process.env.WS_PORT || 7778;
 const HTTP_PORT = process.env.HTTP_PORT || 7777;
 
@@ -55,9 +58,9 @@ io.on("connection", (socket) => {
 server.listen(WS_PORT);
 
 //send the main index.html to user for whatever route they access
-app.use(express.static("../client/build"));
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 app.get("*", (req, res) => {
-  res.sendFile("..//client/build/index.html");
+  res.sendFile(path.join(__dirname + "../client/build/index.html"));
 });
 
 app.listen(HTTP_PORT, () => {
