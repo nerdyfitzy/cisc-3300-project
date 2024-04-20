@@ -3,9 +3,13 @@ import InputFields from "./inputFields";
 import MessageContainer from "./messageContainer";
 import { io } from "socket.io-client";
 
-const socket = io("https://anonymous-messager-da0bfe0ead36.herokuapp.com/");
+const socket = io("/");
 socket.io.on("error", (error) => {
   console.log(error);
+});
+
+socket.on("connect", () => {
+  console.log("i am connected to the server");
 });
 
 const sendMessage = (val) => {

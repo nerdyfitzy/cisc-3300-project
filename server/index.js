@@ -14,27 +14,23 @@ const PORT = process.env.PORT || 7777;
 
 const app = express();
 app.use(cors());
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Internal Server Error");
-});
-
-//send the main index.html to user for whatever route they access
-app.use(express.static(path.resolve(__dirname, "../client/build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
-});
-
-app.listen(PORT, () => {
-  console.log("http started on", PORT);
-});
-
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: `http://localhost:3000`,
     methods: ["GET", "POST"],
   },
+});
+
+// app.use((err, req, res, next) => {
+//   console.error(err.stack);
+//   res.status(500).send("Internal Server Error");
+// });
+
+//send the main index.html to user for whatever route they access
+app.use(express.static(path.resolve(__dirname, "../client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
 });
 
 io.on("connection", (socket) => {
@@ -63,3 +59,5 @@ io.on("connection", (socket) => {
     console.log("disconnection");
   });
 });
+
+server.listen(PORT);
