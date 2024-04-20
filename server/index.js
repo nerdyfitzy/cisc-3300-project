@@ -10,14 +10,23 @@ import "dotenv/config";
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
-const WS_PORT = process.env.WS_PORT || 7778;
-const HTTP_PORT = process.env.HTTP_PORT || 7777;
+const PORT = process.env.PORT || 7777;
 
 const app = express();
 app.use(cors());
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Internal Server Error");
+});
+
+//send the main index.html to user for whatever route they access
+app.use(express.static(path.resolve(__dirname, "../client/build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "../client/build/index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log("http started on", PORT);
 });
 
 const server = createServer(app);
@@ -53,16 +62,4 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("disconnection");
   });
-});
-
-server.listen(WS_PORT);
-
-//send the main index.html to user for whatever route they access
-app.use(express.static(path.resolve(__dirname, "../client/build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "../client/build/index.html"));
-});
-
-app.listen(HTTP_PORT, () => {
-  console.log("http started on", HTTP_PORT);
 });

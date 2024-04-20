@@ -3,7 +3,7 @@ import InputFields from "./inputFields";
 import MessageContainer from "./messageContainer";
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:7778", {
+const socket = io("http://localhost:7777", {
   reconnectionDelayMax: 10000,
 });
 socket.io.on("error", (error) => {
